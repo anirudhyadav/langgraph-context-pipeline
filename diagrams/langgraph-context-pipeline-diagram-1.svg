@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420">
+<rect width="1200" height="420" fill="#FFFFFF"/>
+<text font-family="Arial,sans-serif" font-size="20" font-weight="600" fill="#1F1F1F" x="600" y="36" text-anchor="middle">Context Assembly Pipeline — 5 LangGraph Nodes</text>
+<text font-family="Arial,sans-serif" font-size="14" fill="#888888" x="600" y="58" text-anchor="middle">Each node controls one lever of the context window. State flows left to right.</text>
+
+<!-- State arrow baseline -->
+<line x1="60" y1="175" x2="1140" y2="175" stroke="#E0E0E0" stroke-width="2" stroke-dasharray="6 4"/>
+<text font-family="Arial,sans-serif" font-size="11" fill="#AAAAAA" x="600" y="170" text-anchor="middle">AgentState flows through all nodes</text>
+
+<!-- Node 1: retrieve -->
+<rect x="60" y="86" width="170" height="78" rx="10" fill="#F1EFE8" stroke="#B4B2A9" stroke-width="1.5"/>
+<text font-family="Arial,sans-serif" font-size="15" font-weight="600" fill="#2C2C2A" x="145" y="118" text-anchor="middle">retrieve</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#666660" x="145" y="136" text-anchor="middle">Pulls relevant docs</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#666660" x="145" y="152" text-anchor="middle">from vector store</text>
+<!-- Node 1 output label -->
+<rect x="68" y="200" width="154" height="26" rx="6" fill="#F5F3EE" stroke="#CCCCCC" stroke-width="0.5"/>
+<text font-family="Arial,sans-serif" font-size="11" fill="#888888" x="145" y="217" text-anchor="middle">→ retrieved_docs[ ]</text>
+
+<!-- Arrow 1→2 -->
+<line x1="232" y1="125" x2="258" y2="125" stroke="#CCCCCC" stroke-width="2"/>
+<polygon points="256,120 264,125 256,130" fill="#CCCCCC"/>
+
+<!-- Node 2: trim_history -->
+<rect x="260" y="86" width="170" height="78" rx="10" fill="#EBF3FB" stroke="#B5D4F4" stroke-width="1.5"/>
+<text font-family="Arial,sans-serif" font-size="15" font-weight="600" fill="#0C447C" x="345" y="118" text-anchor="middle">trim_history</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#185FA5" x="345" y="136" text-anchor="middle">Keeps last N turns,</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#185FA5" x="345" y="152" text-anchor="middle">summarises the rest</text>
+<rect x="268" y="200" width="154" height="26" rx="6" fill="#EBF3FB" stroke="#B5D4F4" stroke-width="0.5"/>
+<text font-family="Arial,sans-serif" font-size="11" fill="#185FA5" x="345" y="217" text-anchor="middle">→ messages[ ] trimmed</text>
+
+<!-- Arrow 2→3 -->
+<line x1="432" y1="125" x2="458" y2="125" stroke="#CCCCCC" stroke-width="2"/>
+<polygon points="456,120 464,125 456,130" fill="#CCCCCC"/>
+
+<!-- Node 3: format_tools -->
+<rect x="460" y="86" width="170" height="78" rx="10" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1.5"/>
+<text font-family="Arial,sans-serif" font-size="15" font-weight="600" fill="#3C3489" x="545" y="118" text-anchor="middle">format_tools</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#534AB7" x="545" y="136" text-anchor="middle">Trims and structures</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#534AB7" x="545" y="152" text-anchor="middle">raw tool outputs</text>
+<rect x="468" y="200" width="154" height="26" rx="6" fill="#EEEDFE" stroke="#CECBF6" stroke-width="0.5"/>
+<text font-family="Arial,sans-serif" font-size="11" fill="#534AB7" x="545" y="217" text-anchor="middle">→ tool_outputs[ ] clean</text>
+
+<!-- Arrow 3→4 -->
+<line x1="632" y1="125" x2="658" y2="125" stroke="#CCCCCC" stroke-width="2"/>
+<polygon points="656,120 664,125 656,130" fill="#CCCCCC"/>
+
+<!-- Node 4: assemble_context (featured) -->
+<rect x="658" y="74" width="186" height="102" rx="10" fill="#0F1B2D" stroke="#1D9E75" stroke-width="2"/>
+<text font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#1D9E75" x="751" y="110" text-anchor="middle">assemble_context</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#AAAAAA" x="751" y="130" text-anchor="middle">Merges all layers with</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#AAAAAA" x="751" y="148" text-anchor="middle">token budget control</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#1D9E75" x="751" y="166" text-anchor="middle">← the critical node</text>
+<rect x="662" y="200" width="178" height="26" rx="6" fill="#0F1B2D" stroke="#1D9E75" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="11" fill="#1D9E75" x="751" y="217" text-anchor="middle">→ assembled_context string</text>
+
+<!-- Arrow 4→5 -->
+<line x1="846" y1="125" x2="872" y2="125" stroke="#CCCCCC" stroke-width="2"/>
+<polygon points="870,120 878,125 870,130" fill="#CCCCCC"/>
+
+<!-- Node 5: generate -->
+<rect x="874" y="86" width="170" height="78" rx="10" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1.5"/>
+<text font-family="Arial,sans-serif" font-size="15" font-weight="600" fill="#085041" x="959" y="118" text-anchor="middle">generate</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#0F6E56" x="959" y="136" text-anchor="middle">Calls LLM with</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#0F6E56" x="959" y="152" text-anchor="middle">assembled context</text>
+<rect x="878" y="200" width="162" height="26" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="0.5"/>
+<text font-family="Arial,sans-serif" font-size="11" fill="#085041" x="959" y="217" text-anchor="middle">→ messages[ ] + response</text>
+
+<!-- Arrow 5→END -->
+<line x1="1046" y1="125" x2="1072" y2="125" stroke="#CCCCCC" stroke-width="2"/>
+<polygon points="1070,120 1078,125 1070,130" fill="#CCCCCC"/>
+<rect x="1078" y="108" width="60" height="34" rx="8" fill="#F5F5F5" stroke="#CCCCCC" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="13" font-weight="500" fill="#888888" x="1108" y="130" text-anchor="middle">END</text>
+
+<!-- Token budget note -->
+<rect x="240" y="270" width="720" height="40" rx="8" fill="#F9F9F9" stroke="#E0E0E0" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="13" fill="#555555" x="600" y="291" text-anchor="middle">assemble_context enforces a token budget across all layers — deciding what gets included and what gets trimmed</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#888888" x="600" y="308" text-anchor="middle">every other node prepares its layer; assemble_context is where the context window is designed</text>
+
+<!-- 5 levers callouts -->
+<text font-family="Arial,sans-serif" font-size="11" fill="#AAAAAA" x="145" y="355" text-anchor="middle">Lever 1</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#AAAAAA" x="145" y="369" text-anchor="middle">Retrieval quality</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#185FA5" x="345" y="355" text-anchor="middle">Lever 3</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#185FA5" x="345" y="369" text-anchor="middle">History management</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#534AB7" x="545" y="355" text-anchor="middle">Lever 4</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#534AB7" x="545" y="369" text-anchor="middle">Tool output formatting</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#1D9E75" x="751" y="355" text-anchor="middle">Levers 2 + 5</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#1D9E75" x="751" y="369" text-anchor="middle">Window structure + state</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#085041" x="959" y="355" text-anchor="middle">Output</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#085041" x="959" y="369" text-anchor="middle">LLM call</text>
+
+<text font-family="Arial,sans-serif" font-size="13" fill="#AAAAAA" x="600" y="405" text-anchor="middle">Figure 1: Each of the 5 context engineering levers maps to exactly one node in the pipeline.</text>
+</svg>

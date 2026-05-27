@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560">
+<rect width="1200" height="560" fill="#FFFFFF"/>
+<text font-family="Arial,sans-serif" font-size="20" font-weight="600" fill="#1F1F1F" x="600" y="36" text-anchor="middle">Before vs After: What Changes in the Context Window</text>
+
+<!-- LEFT PANEL: Without -->
+<rect x="40" y="56" width="500" height="436" rx="14" fill="#FEF9F9" stroke="#F5C5C5" stroke-width="1.5"/>
+<rect x="40" y="56" width="500" height="46" rx="14" fill="#C0392B" stroke="#C0392B" stroke-width="0"/>
+<rect x="40" y="88" width="500" height="14" fill="#C0392B"/>
+<text font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#FFFFFF" x="290" y="84" text-anchor="middle">Without context engineering</text>
+
+<!-- Left layers - bloated -->
+<rect x="56" y="116" width="468" height="44" rx="6" fill="#F5F5F5" stroke="#DDDDDD" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#666666" x="290" y="139" text-anchor="middle">System prompt</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#AAAAAA" x="290" y="154" text-anchor="middle">~300 tokens</text>
+
+<rect x="56" y="166" width="468" height="96" rx="6" fill="#FFECEC" stroke="#F5C5C5" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#C0392B" x="290" y="200" text-anchor="middle">ALL retrieved documents — no scoring</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#E07070" x="290" y="220" text-anchor="middle">Top 20 results regardless of relevance</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#E07070" x="290" y="238" text-anchor="middle">~8,000 tokens · 60% noise</text>
+
+<rect x="56" y="268" width="468" height="82" rx="6" fill="#FFECEC" stroke="#F5C5C5" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#C0392B" x="290" y="298" text-anchor="middle">Full conversation history — never trimmed</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#E07070" x="290" y="318" text-anchor="middle">All 40 turns since session start</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#E07070" x="290" y="336" text-anchor="middle">~4,000 tokens · includes stale context</text>
+
+<rect x="56" y="356" width="468" height="62" rx="6" fill="#FFECEC" stroke="#F5C5C5" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#C0392B" x="290" y="382" text-anchor="middle">Raw tool outputs — unformatted API responses</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#E07070" x="290" y="400" text-anchor="middle">~2,000 tokens · JSON noise included</text>
+
+<rect x="56" y="424" width="468" height="36" rx="6" fill="#F5F5F5" stroke="#DDDDDD" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" fill="#666666" x="290" y="447" text-anchor="middle">User input</text>
+
+<!-- Left total -->
+<rect x="56" y="472" width="468" height="10" rx="3" fill="#C0392B" opacity="0.2"/>
+<rect x="56" y="472" width="468" height="10" rx="3" fill="#C0392B"/>
+<text font-family="Arial,sans-serif" font-size="13" font-weight="600" fill="#C0392B" x="290" y="502" text-anchor="middle">~14,300 tokens used · no budget control · model sees everything</text>
+
+<!-- RIGHT PANEL: With -->
+<rect x="660" y="56" width="500" height="436" rx="14" fill="#F4FAF7" stroke="#9FE1CB" stroke-width="1.5"/>
+<rect x="660" y="56" width="500" height="46" rx="14" fill="#1D9E75" stroke="#1D9E75" stroke-width="0"/>
+<rect x="660" y="88" width="500" height="14" fill="#1D9E75"/>
+<text font-family="Arial,sans-serif" font-size="16" font-weight="600" fill="#FFFFFF" x="910" y="84" text-anchor="middle">With context assembly pipeline</text>
+
+<!-- Right layers - controlled -->
+<rect x="676" y="116" width="468" height="36" rx="6" fill="#F5F5F5" stroke="#DDDDDD" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#555555" x="910" y="132" text-anchor="middle">System prompt</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#888888" x="910" y="146" text-anchor="middle">~300 tokens · unchanged</text>
+
+<rect x="676" y="158" width="468" height="110" rx="6" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#085041" x="910" y="188" text-anchor="middle">Retrieved documents — scored + filtered</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#0F6E56" x="910" y="208" text-anchor="middle">Top 5 results · relevance score &gt; 0.75 only</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#0F6E56" x="910" y="226" text-anchor="middle">~3,200 tokens · all signal, no noise</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#1D9E75" x="910" y="244" text-anchor="middle">retrieve node → assemble_context enforces budget</text>
+
+<rect x="676" y="274" width="468" height="68" rx="6" fill="#EBF3FB" stroke="#B5D4F4" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#0C447C" x="910" y="300" text-anchor="middle">Conversation history — last 6 turns only</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#185FA5" x="910" y="320" text-anchor="middle">Older turns summarised into 1 line</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#185FA5" x="910" y="338" text-anchor="middle">~900 tokens · trim_history node</text>
+
+<rect x="676" y="348" width="468" height="52" rx="6" fill="#EEEDFE" stroke="#CECBF6" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#3C3489" x="910" y="370" text-anchor="middle">Tool outputs — trimmed and structured</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#534AB7" x="910" y="388" text-anchor="middle">~600 tokens · format_tools node</text>
+
+<rect x="676" y="406" width="468" height="36" rx="6" fill="#F5F5F5" stroke="#DDDDDD" stroke-width="1"/>
+<text font-family="Arial,sans-serif" font-size="14" font-weight="500" fill="#555555" x="910" y="422" text-anchor="middle">User input</text>
+<text font-family="Arial,sans-serif" font-size="11" fill="#888888" x="910" y="436" text-anchor="middle">~50 tokens</text>
+
+<!-- Right total bar -->
+<rect x="676" y="454" width="468" height="10" rx="3" fill="#E0E0E0"/>
+<rect x="676" y="454" width="313" height="10" rx="3" fill="#1D9E75"/>
+<text font-family="Arial,sans-serif" font-size="12" fill="#AAAAAA" x="1130" y="464" text-anchor="end">12,000</text>
+<text font-family="Arial,sans-serif" font-size="13" font-weight="600" fill="#085041" x="910" y="490" text-anchor="middle">~5,050 tokens used of 12,000 budget · 58% headroom remaining</text>
+<text font-family="Arial,sans-serif" font-size="12" fill="#0F6E56" x="910" y="506" text-anchor="middle">every layer is deliberate · nothing enters the context by accident</text>
+
+<!-- VS divider -->
+<text font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#CCCCCC" x="600" y="285" text-anchor="middle">→</text>
+
+<text font-family="Arial,sans-serif" font-size="13" fill="#AAAAAA" x="600" y="540" text-anchor="middle">Figure 2: Same session, same query. The assembled version uses 65% fewer tokens and surfaces only relevant information.</text>
+</svg>
